@@ -8,7 +8,7 @@ const getJob = async (req, res) => {
 
 const createJob = async (req, res) => {
   req.body.createdBy = req.user.userId;
-  //res.json(req.user);
+  res.json(req.user);
 };
 
 const deleteJob = async (req, res) => {

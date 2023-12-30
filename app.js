@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
@@ -5,7 +6,7 @@ const app = express();
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
-const errorHandlerMiddleware = require("./middleware/error-handler");
+//const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //connectDB
 
@@ -16,19 +17,18 @@ const auth = require("./middleware/authentication");
 //routers
 const authRouter = require("./routes/auth");
 const jobsRouter = require("./routes/jobs");
+const globalErrorHandler = require("./errors/globalHandler");
 
 app.use(express.json());
 // extra packages
 
 // routes
-app.use("/", (req, res) => {
-  res.send("Wey them, fall out");
-});
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", auth, jobsRouter);
 
 app.use(notFoundMiddleware);
-app.use(errorHandlerMiddleware);
+app.use(globalErrorHandler);
 
 const port = process.env.PORT || 8500;
 

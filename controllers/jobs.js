@@ -7,15 +7,16 @@ const getJob = async (req, res) => {
 };
 
 const createJob = async (req, res) => {
+  req.body.createdBy = req.user.userId;
   res.json(req.user);
 };
 
 const deleteJob = async (req, res) => {
-  res.send('Delete Job');
+  res.send("Delete Job");
 };
 
 const updateJob = async (req, res) => {
-  res.send('Update Job');
+  res.send("Update Job");
 };
 
 module.exports = { getAllJobs, getJob, createJob, deleteJob, updateJob };

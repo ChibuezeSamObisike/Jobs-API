@@ -24,6 +24,7 @@ class ResponseHelper {
           ? "fail"
           : "error",
     };
+    4;
     if (message) body.message = message;
     if (data) body.data = data;
     const { reqName, reqId } = res.req.headers;

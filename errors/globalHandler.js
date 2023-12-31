@@ -1,4 +1,5 @@
 const AppError = require("./app-error");
+const CustomAPIError = require("./custom-api");
 const ResponseHelper = require("./response-handler");
 
 const logger = console;
@@ -68,6 +69,9 @@ const sendError = (err, res) => {
 };
 
 const globalErrorHandler = (err, req, res, next) => {
+  if (err instanceof CustomAPIError) {
+    return res.status(err.statusCode).json({ msg: err.message });
+  }
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 

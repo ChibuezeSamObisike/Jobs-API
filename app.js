@@ -6,7 +6,7 @@ const app = express();
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
-//const errorHandlerMiddleware = require("./middleware/error-handler");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //connectDB
 
@@ -28,7 +28,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", auth, jobsRouter);
 
 app.use(notFoundMiddleware);
-app.use(globalErrorHandler);
+app.use(globalErrorHandler || errorHandlerMiddleware);
 
 const port = process.env.PORT || 8500;
 

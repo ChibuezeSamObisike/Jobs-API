@@ -3,32 +3,24 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors");
 
 const register = async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
+  const { name, email, password } = req.body;
 
-    console.log("User body", req.body);
-
-    if (!name || !email || !password) {
-      throw new BadRequestError("Please provide name email and password");
-    }
-    const user = await User.create(req.body);
-    const token = user.createJWT();
-
-    res.status(StatusCodes.CREATED).json({
-      user: {
-        name: user.name,
-      },
-      token,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(501).json({ message: "An error occured" });
+  if (!name || !email || !password) {
+    throw new BadRequestError("Please provide name email and password");
   }
+  const user = await User.create(req.body);
+  const token = user.createJWT();
+
+  res.status(StatusCodes.CREATED).json({
+    user: {
+      name: user.name,
+    },
+    token,
+  });
 };
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log({ email, password });
   if (!email || !password) {
     throw new BadRequestError("Please provide name email and password");
   }

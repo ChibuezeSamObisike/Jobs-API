@@ -28,7 +28,17 @@ const createJob = async (req, res) => {
 };
 
 const deleteJob = async (req, res) => {
-  res.send("Delete Job");
+  const {
+    params: { id: jobId },
+    user: { userId },
+  } = req;
+
+  const job = await Job.findOneAndRemove({ _id: jobId, createdBy: userId });
+  if (!job) {
+    throw new NotFoundError(`No job found with Id: ${jobId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ job });
 };
 
 const updateJob = async (req, res) => {
@@ -55,7 +65,7 @@ const updateJob = async (req, res) => {
     throw new NotFoundError(`No job found with Id: ${jobId}`);
   }
 
-  res.send("Update Job");
+  res.status(StatusCodes.OK).json({ job });
 };
 
 module.exports = { getAllJobs, getJob, createJob, deleteJob, updateJob };
